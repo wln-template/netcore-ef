@@ -1,0 +1,58 @@
+{
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0",
+      "type": "platform"
+    },
+    "Microsoft.AspNetCore.StaticFiles": "1.1.0",
+    "Microsoft.AspNetCore.Hosting": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.EntityFrameworkCore": "1.0.1",
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.1",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.0",
+    "System.Data.SqlClient": "4.1.0",
+    "Pomelo.Data.MySql": "1.0.0",
+    "Pomelo.EntityFrameworkCore.MySql": "1.0.1-prerelease-10018",
+    "System.Linq.Expressions": "4.1.0",
+    "Wlniao.XCore": "1.4.2"
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "imports": "portable-net45+win8+dnxcore50",
+      "version": "1.0.0-preview2-final"
+    }
+  },
+  "frameworks": {
+    "netcoreapp1.6": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "preserveCompilationContext": true
+  },
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
+    }
+  },
+  "publishOptions": {
+    "include": [
+      ".gitignore",
+      "GitPush.bat",
+      "Dockerfile",
+      "xcore/xcore.config",
+      "wwwroot",
+      "Views"
+    ]
+  },
+
+  "scripts": {
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  }
+}

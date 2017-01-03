@@ -1,0 +1,6 @@
+﻿.suo
+bin
+obj
+*.log
+*.lock.json
+Properties
