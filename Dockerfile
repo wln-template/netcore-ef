@@ -1,2 +1,2 @@
-FROM wlniao/dotnet:latest
-ENTRYPOINT ["dotnet", "Template.dll"]
+FROM wlniao/dotnet:1.1.1
+ENTRYPOINT ["dotnet", "netcore-ef.dll"]

@@ -5,27 +5,28 @@ namespace Models
 {
     public class MyContext : DbContext
     {
-        private static string connstr = null;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (connstr == null)
+            if (!string.IsNullOrEmpty(DbConnectInfo.WLN_CONNSTR_MYSQL))
             {
-                connstr = DbConnectInfo.WLN_CONNSTR;
+                optionsBuilder.UseMySql(DbConnectInfo.WLN_CONNSTR_MYSQL);
             }
-            if (string.IsNullOrEmpty(connstr))
+            else if (!string.IsNullOrEmpty(DbConnectInfo.WLN_CONNSTR_SQLSERVER))
             {
-                optionsBuilder.UseSqlite("Data Source=" + Wlniao.IO.PathTool.Map(Wlniao.XCore.StartupRoot, "xcore", "xcore.db"));
+                optionsBuilder.UseSqlServer(DbConnectInfo.WLN_CONNSTR_SQLSERVER, b => b.UseRowNumberForPaging());
+            }
+            else if (!string.IsNullOrEmpty(DbConnectInfo.WLN_CONNSTR_SQLITE))
+            {
+                optionsBuilder.UseSqlite(DbConnectInfo.WLN_CONNSTR_SQLITE);
             }
             else
             {
-                if (string.IsNullOrEmpty(DbConnectInfo.WLN_MYSQL_PWD))
-                {
-                    optionsBuilder.UseSqlServer(connstr, b => b.UseRowNumberForPaging());
-                }
-                else
-                {
-                    optionsBuilder.UseMySql(connstr);
-                }
+#if DEBUG
+                var connstr = "Data Source=" + Wlniao.IO.PathTool.Map(Wlniao.XCore.StartupRoot, "xcore", "xcore.db");
+                optionsBuilder.UseSqlite(connstr);
+#else
+                log.Fatal("WLN_CONNSTR is not config");
+#endif
             }
         }
         public static String NewId()

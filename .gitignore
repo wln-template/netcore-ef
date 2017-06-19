@@ -2,5 +2,7 @@
 bin
 obj
 *.log
-*.lock.json
+*.json
+*.user
 Properties
+xcore.db
